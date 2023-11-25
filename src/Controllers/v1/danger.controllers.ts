@@ -7,7 +7,9 @@ export async function Get(req: Request, res: Response, next: NextFunction) {
   try {
     const query = req.query
 
-    checkAdmin(req, res)
+    if (!(await checkAdmin(req, res))) return res.status(400).json({
+      error: "No auth"
+    })
 
     if (query.status) {
       let dangers = await prisma.danger.findMany({

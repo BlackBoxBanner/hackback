@@ -1,15 +1,11 @@
 import type { Request, Response } from "express"
-import Cookie from "cookies"
+import prisma from "./prisma"
 
 export async function checkAdmin(req: Request, res: Response,) {
-  const cookie = new Cookie(req, res)
-
   const headers = (req.headers.authorization)?.split(" ")
-  console.log(headers);
-  // const admin = 
-  
+  const data = atob(headers![1]).split(":")
 
-  // atob()
+  const admin = await prisma.auth.findFirst({ where: { username: data[0], password: data[1] } })
 
-  
+  return admin && admin.role === "member"
 }
