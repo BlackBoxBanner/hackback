@@ -1,6 +1,7 @@
 import prisma from "@/utils/prisma"
 import type { Request, Response, NextFunction } from "express"
 import { hash } from "bcrypt"
+import { Auth } from "@prisma/client"
 
 export async function Get(req: Request, res: Response, next: NextFunction) {
   const data = await prisma.auth.findMany()
@@ -56,14 +57,18 @@ export async function Post(req: Request, res: Response, next: NextFunction) {
   try {
     type CreateUser = {
       username: string
-      password: string,
+      password: string
+      firstname: string
+      lastname: string
+      email: string
+      phone: string
       role: "member" | "admin"
     }
 
-    const { username, password } = req.body as CreateUser
+    const { username, password, firstname, lastname, email, phone } = req.body as CreateUser
 
     const findExistUser = await prisma.auth.findFirst({ where: { username } })
-
+    console.log(findExistUser)
     if (findExistUser != null) {
       return res.json({
         method: "POST",
@@ -73,7 +78,7 @@ export async function Post(req: Request, res: Response, next: NextFunction) {
 
     const result = await prisma.auth.create({
       data: {
-        username, password
+        username, password, firstname, lastname, email, phone
       }
     })
 
