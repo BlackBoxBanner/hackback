@@ -10,6 +10,7 @@ import templateRouter from '@/Routes/template.routers'
 import defaultRouter from '@/Routes/v1/default.routers'
 import authRouter from "@/Routes/v1/auth.routers"
 import dangerRouter from "@/Routes/v1/danger.routers"
+import statRouter from "@/Routes/v1/stat.routes"
 
 //NOTE - ENV
 import 'dotenv/config'
@@ -40,7 +41,7 @@ app.use("/api/", defaultRouter)
 app.use("/api/template", templateRouter)
 app.use("/api/auth", authRouter)
 app.use("/api/danger", dangerRouter)
-
+app.use("/api/stat", statRouter)
 //!SECTION
 
 app.use(function (req, res, next) {
