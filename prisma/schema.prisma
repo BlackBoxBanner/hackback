@@ -10,13 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ConstructionType {
+  NA
+  Building
+  Bridge
+  Road
+  House
+}
+
 model Danger {
   id            Int     @id @default(autoincrement())
   name          String?
   latitude      String?
   longitude     String?
-  timelineStart String?
-  timelineEnd   String?
+  timelineStart DateTime?
+  timelineEnd   DateTime?
+  constructionType   ConstructionType
   rating        Int
   status        Boolean @default(true)
 }
