@@ -17,19 +17,13 @@ export async function Get(req: Request, res: Response, next: NextFunction) {
 
     const danger = await prisma.danger.findMany()
 
-    const rating = danger.reduce((result, next) => {
-        result.push(next.rating)
-        return result
-    }, [] as number[])
+    const rating = danger.map(next => next.rating);
 
-    const rateList = rating.sort((a, b) => a + b).reduce((result, next) => {
-        if(isNaN(result[next])){
-            result[next] = 0
-        }
-        
-        result[next] = Number(result[next]) + next
-        return result
-    }, {} as Record<number, number>)
+    const rateList = rating.reduce((result, next) => {
+        result[next] = (result[next] || 0) + next;
+        return result;
+    }, {} as Record<number, number>);
+    
 
     res.json({
         method: "GET",
