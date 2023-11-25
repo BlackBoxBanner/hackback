@@ -1,12 +1,13 @@
 import prisma from "@/utils/prisma"
 import type { Request, Response, NextFunction } from "express"
 
-export function Get(req: Request, res: Response, next: NextFunction) {
+export async function Get(req: Request, res: Response, next: NextFunction) {
+  const data = await prisma.auth.findMany()
 
-  res.json({
+  return res.json({
     method: "GET",
     message: "GET Method is working",
-    query: req.query
+    query: data
   })
 }
 
@@ -23,7 +24,7 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
     const result = await prisma.auth.findFirst({ where: { username, password } })
 
     if (result != null) {
-      await res.cookie("auth-session", result)
+      res.cookie("auth-session", result)
       return res.json({
         method: "POST",
         message: "login succesfuly",
