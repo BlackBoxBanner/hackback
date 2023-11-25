@@ -36,10 +36,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.enable('trust proxy');
 app.use(cookieParser(process.env.COOKIE_SECRET));
 //NOTE - declare routes
-app.use("/", defaultRouter)
-app.use("/template", templateRouter)
-app.use("/auth", authRouter)
-app.use("/danger", dangerRouter)
+app.use("/api/", defaultRouter)
+app.use("/api/template", templateRouter)
+app.use("/api/auth", authRouter)
+app.use("/api/danger", dangerRouter)
 
 //!SECTION
 
