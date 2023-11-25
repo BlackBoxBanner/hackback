@@ -1,5 +1,6 @@
 import prisma from "@/utils/prisma"
 import { checkAdmin } from "@/utils/sessionCheck"
+import { ConstructionType } from "@prisma/client"
 import type { Request, Response, NextFunction } from "express"
 
 export async function Get(req: Request, res: Response, next: NextFunction) {
@@ -45,17 +46,18 @@ export async function Post(req: Request, res: Response, next: NextFunction) {
       name?: string
       latitude?: string,
       longitude?: string,
-      timelineStart?: string,
-      timelineEnd?: string,
+      timelineStart?: Date,
+      timelineEnd?: Date,
+      constructionType: ConstructionType
       rating: number,
       status?: boolean
     }
 
-    const { name, latitude, longitude, timelineStart, timelineEnd, rating, status } = req.body as CreateDanger
+    const { name, latitude, longitude, timelineStart, timelineEnd, rating, status, constructionType } = req.body as CreateDanger
 
     const result = await prisma.danger.create({
       data: {
-        name, latitude, longitude, timelineStart, timelineEnd, rating, status
+        name, latitude, longitude, timelineStart, timelineEnd, rating, status, constructionType
       }
     })
     res.json({
