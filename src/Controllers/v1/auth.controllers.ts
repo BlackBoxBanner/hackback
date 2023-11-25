@@ -1,5 +1,4 @@
 import prisma from "@/utils/prisma"
-import cookieParser from "cookie-parser"
 import type { Request, Response, NextFunction } from "express"
 
 export function Get(req: Request, res: Response, next: NextFunction) {
@@ -57,6 +56,7 @@ export async function Post(req: Request, res: Response, next: NextFunction) {
     type CreateUser = {
       username: string
       password: string,
+      role: "member" | "admin"
     }
 
     const { username, password } = req.body as CreateUser

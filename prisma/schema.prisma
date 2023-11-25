@@ -11,22 +11,27 @@ datasource db {
 }
 
 model Danger {
-  id  Int @id @default(autoincrement())
-  name String? 
-  latitude String?
-  longitude String?
+  id            Int     @id @default(autoincrement())
+  name          String?
+  latitude      String?
+  longitude     String?
   timelineStart String?
-  timelineEnd String?
-  rating Int
-  status Boolean @default(true)
+  timelineEnd   String?
+  rating        Int
+  status        Boolean @default(true)
+}
+
+enum Role {
+  admin
+  member
 }
 
 model Auth {
-  id  Int @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   username String
   password String
+  role     Role   @default(member)
 }
-
 
 // {
 //   location: {
