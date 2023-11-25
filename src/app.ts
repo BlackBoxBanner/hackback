@@ -1,6 +1,6 @@
 //SECTION - import
 //NOTE - ExpressJS
-import express, { Express, Request, Response } from 'express'
+import express, { Express, NextFunction, Request, Response } from 'express'
 import cookieParser from "cookie-parser"
 import bodyParser, { BodyParser } from 'body-parser';
 
@@ -43,6 +43,10 @@ app.use("/api/danger", dangerRouter)
 
 //!SECTION
 
+app.use(function (req, res, next) {
+  console.log('req.url', req.url);
+  // res.redirect('/login');
+});
 
 //SECTION - start application
 const port = process.env.PORT

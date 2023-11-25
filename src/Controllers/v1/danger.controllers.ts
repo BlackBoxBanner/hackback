@@ -1,9 +1,12 @@
 import prisma from "@/utils/prisma"
+import { checkAdmin } from "@/utils/sessionCheck"
 import type { Request, Response, NextFunction } from "express"
 
 export async function Get(req: Request, res: Response, next: NextFunction) {
   try {
     const query = req.query
+
+    checkAdmin(req, res)
 
     if (query.status) {
       let dangers = await prisma.danger.findMany({
@@ -11,7 +14,7 @@ export async function Get(req: Request, res: Response, next: NextFunction) {
           status: Boolean(query.status)
         }
       })
-      res.json({
+      return res.json({
         method: "GET",
         message: dangers,
       })
